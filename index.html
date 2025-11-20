@@ -213,4 +213,44 @@
 
         function loadVideoContent(data, card) {
             if (currentActiveCard) {
-                currentActiveCard
+                currentActiveCard.classList.remove('active');
+            }
+            card.classList.add('active');
+            currentActiveCard = card;
+
+            // Tua video theo thời gian
+            videoPlayerEl.currentTime = data.time;
+            videoPlayerEl.play();
+
+            videoTitleEl.textContent = data.title; 
+            videoDescriptionEl.textContent = data.description;
+        }
+
+        function displayMovies(filter = '') {
+            movieListEl.innerHTML = ''; 
+            
+            const filteredData = videoData.filter(item => 
+                item.title.toLowerCase().includes(filter.toLowerCase()) || 
+                item.description.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filteredData.forEach(data => {
+                movieListEl.appendChild(createMovieCard(data));
+            });
+            
+            if (filter === '' && filteredData.length > 0) {
+                const firstCard = movieListEl.querySelector('.movie-card');
+                if (firstCard) {
+                    const data = filteredData[0];
+                    
+                    // Khởi tạo video bằng cách tải và phát ngay lập tức (FIXED)
+                    videoPlayerEl.load();
+                    videoPlayerEl.play(); 
+                    
+                    videoTitleEl.textContent = data.title; 
+                    videoDescriptionEl.textContent = data.description;
+                    
+                    firstCard.classList.add('active');
+                    currentActiveCard = firstCard;
+                }
+            }
