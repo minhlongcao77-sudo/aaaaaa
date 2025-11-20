@@ -149,13 +149,13 @@
             </section>
 
         <section id="player-section">
-           <video 
-    id="video-player" 
-    src="https://drive.google.com/uc?id=1BTMUKAFzwURhbTmXuTzVVtLrCBNYMUKO" 
-    controls autoplay muted 
-    style="width: 100%; max-height: 500px; border-radius: 10px; background-color: #000;">
-    Trình duyệt của bạn không hỗ trợ video HTML5.
-</video>
+            <video 
+                id="video-player" 
+                src="https://drive.google.com/uc?id=1BTMUKAFzwURhbTmXuTzVVtLrCBNYMUKO" 
+                controls autoplay muted 
+                style="width: 100%; max-height: 500px; border-radius: 10px; background-color: #000;">
+                Trình duyệt của bạn không hỗ trợ video HTML5.
+            </video>
             
             <div id="player-details">
                 <h2 id="video-title">Khoảnh khắc 30/04/1975 - Sài Gòn</h2>
@@ -186,7 +186,7 @@
 
         const movieListEl = document.getElementById('movie-list');
         const videoPlayerEl = document.getElementById('video-player');
-        const videoSourceEl = document.getElementById('video-source'); 
+        // Đã bỏ videoSourceEl vì thẻ source bị loại bỏ trong HTML
         const videoTitleEl = document.getElementById('video-title');
         const videoDescriptionEl = document.getElementById('video-description');
         const searchInputEl = document.getElementById('search-input');
@@ -243,7 +243,7 @@
                 if (firstCard) {
                     const data = filteredData[0];
                     
-                    // Khởi tạo video bằng cách tải và phát ngay lập tức
+                    // Khởi tạo video bằng cách tải và phát ngay lập tức (FIXED)
                     videoPlayerEl.load();
                     videoPlayerEl.play(); 
                     
@@ -264,4 +264,3 @@
     </script>
 </body>
 </html>
-
