@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trình Duyệt Video Lịch Sử - 30/04/1975</title>
     <style>
-        /* BẮT ĐẦU CSS: FIX LỖI BỐ CỤC VÀ KHÔNG HIỆN THẺ */
+        /* CSS ĐÃ SỬA */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -140,13 +140,12 @@
                 max-height: 30vh;
             }
         }
-        /* KẾT THÚC CSS */
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🎬 Trình Duyệt Nội Dung Lịch Sử con trai làm trên web cho ba Thành coi</h1>
+        <h1>🎬 Trình Duyệt Nội Dung Lịch Sử cho ba Thành coi</h1>
         <input type="text" id="search-input" placeholder="Tìm kiếm...">
     </header>
 
@@ -155,51 +154,51 @@
             </section>
 
         <section id="player-section">
-            <iframe 
+            <video 
                 id="video-player" 
-                width="100%" 
-                height="500" 
-                src="https://www.youtube.com/embed/h8DQSnERTB4?autoplay=1&mute=1" 
-                frameborder="0" 
-                allow="autoplay; encrypted-media" 
-                allowfullscreen>
-            </iframe>
-
+                controls autoplay muted 
+                style="width: 100%; max-height: 500px; border-radius: 10px; background-color: #000;">
+                <source id="video-source" src="https://drive.google.com/uc?export=download&id=1BTMUKAFzwURhbTmXuTzVVtLrCBNYMUKO" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ video HTML5.
+            </video>
+            
             <div id="player-details">
                 <h2 id="video-title">Khoảnh khắc 30/04/1975 - Sài Gòn</h2>
                 <p id="video-description">
                     Video lịch sử này mô tả những ngày cuối cùng của chế độ Sài Gòn và sự kiện ngày 30 tháng 4 năm 1975. Vui lòng chọn một khoảnh khắc bên trái để xem chi tiết.
                 </p>
                 <p>
-                    <small>Lưu ý: Chất lượng video và âm thanh là nguyên bản từ các tài liệu lịch sử.</small>
+                    <small>Lưu ý: Sử dụng Google Drive để tải trực tiếp video, khắc phục giới hạn độ tuổi.</small>
                 </p>
             </div>
         </section>
     </main>
 
     <script>
-        // Dữ liệu đã sửa (đảm bảo tính bằng giây tuyệt đối)
+        // DỮ LIỆU ĐÃ CẬP NHẬT THEO VIDEO MỚI
         const videoData = [
-            { id: 1, title: "Hỗn loạn trên đường phố (00:00)", image: "oo.mp4#t=1", time: 0, description: "Những hình ảnh đầu tiên về sự hỗn loạn và lo lắng của người dân Sài Gòn trên các con phố." },
-            { id: 2, title: "Xe tăng quân sự trên phố (00:04)", image: "oo.mp4#t=4", time: 4, description: "Cảnh xe quân sự xuất hiện trên đường phố Sài Gòn, báo hiệu sự thay đổi." },
-            { id: 3, title: "Tổng thống Ford và Kissinger (01:32)", image: "oo.mp4#t=132", time: 92, description: "Tổng thống Mỹ Gerald Ford và Ngoại trưởng Henry Kissinger họp bàn về chiến dịch di tản khỏi Sài Gòn." },
-            { id: 4, title: "Di tản bằng trực thăng (01:45)", image: "oo.mp4#t=145", time: 105, description: "Những chuyến trực thăng khẩn cấp đưa người Mỹ và đồng minh khỏi Sài Gòn, một trong những cảnh tượng biểu tượng của sự kiện." },
-            { id: 5, title: "Lính Mỹ hỗ trợ leo cổng (03:13)", image: "oo.mp4#t=193", time: 193, description: "Cảnh tượng người dân chen chúc, tuyệt vọng leo qua hàng rào Tòa Đại sứ Mỹ để lên trực thăng." },
-            { id: 6, title: "Quân giải phóng vào Dinh Độc Lập (04:03)", image: "oo.mp4#t=403", time: 243, description: "Xe tăng và quân giải phóng tiến vào thành phố, đánh dấu giờ phút lịch sử." },
-            { id: 7, title: "Lời tuyên bố của Dương Văn Minh (04:22)", image: "oo.mp4#t=422", time: 262, description: "Tổng thống chính quyền Sài Gòn, Dương Văn Minh, tuyên bố đầu hàng không điều kiện, giải thể chính phủ." },
-            { id: 8, title: "Thu vũ khí (04:36)", image: "oo.mp4#t=436", time: 276, description: "Hình ảnh tập hợp các loại vũ khí bị thu hồi sau khi quân lực Việt Nam Cộng hòa hạ vũ khí." },
-            { id: 9, title: "Xe tăng 843 tiến vào (06:48)", image: "oo.mp4#t=648", time: 408, description: "Xe tăng T-54B số hiệu 843 và T-59 số hiệu 390 tiến vào cổng Dinh Độc Lập trưa 30/4/1975." },
-            { id: 10, title: "Đón chào trên đường phố (11:07)", image: "oo.mp4#t=1107", time: 667, description: "Cảnh quân giải phóng gặp gỡ người dân Sài Gòn, hòa bình đã lập lại." }
+            { id: 1, title: "Báo cáo tình hình", image: "oo.mp4#t=1", time: 0, description: "Chỉ huy quân giải phóng báo cáo với Nội các Sài Gòn về tình hình tiến công." },
+            { id: 2, title: "Xe tăng vào trung tâm", image: "oo.mp4#t=17", time: 17, description: "Xe tăng T54/59 tiến vào thành phố, người dân chào đón." },
+            { id: 3, title: "Tăng 390 húc cổng Dinh", image: "oo.mp4#t=26", time: 26, description: "Xe tăng húc đổ cổng Dinh Độc Lập." },
+            { id: 4, title: "Tìm đường lên nóc", image: "oo.mp4#t=40", time: 40, description: "Bộ đội tiến vào Dinh, tìm đường lên nóc để cắm cờ giải phóng." },
+            { id: 5, title: "Bộ đội vào phòng họp", image: "oo.mp4#t=59", time: 59, description: "Quân giải phóng tiến vào phòng họp nơi nội các đang chờ." },
+            { id: 6, title: "Dương Văn Minh tuyên bố", image: "oo.mp4#t=75", time: 75, description: "Đại tướng Dương Văn Minh đứng lên tuyên bố đầu hàng quân giải phóng." },
+            { id: 7, title: "Chỉ huy tuyên bố bắt giữ", image: "oo.mp4#t=85", time: 85, description: "Chỉ huy quân giải phóng tuyên bố nội các là tù binh." },
+            { id: 8, title: "Nội các rời Dinh", image: "oo.mp4#t=107", time: 107, description: "Dương Văn Minh và nội các bước xuống cầu thang rời Dinh." },
+            { id: 9, title: "Đọc tuyên bố đầu hàng", image: "oo.mp4#t=143", time: 143, description: "Tướng Dương Văn Minh ngồi đọc tuyên bố đầu hàng không điều kiện (phân cảnh dựng lại)." },
+            { id: 10, title: "Phút giây chiến thắng", image: "oo.mp4#t=154", time: 154, description: "Quân giải phóng vỡ òa niềm vui chiến thắng." }
         ];
 
         const movieListEl = document.getElementById('movie-list');
         const videoPlayerEl = document.getElementById('video-player');
+        const videoSourceEl = document.getElementById('video-source'); 
         const videoTitleEl = document.getElementById('video-title');
         const videoDescriptionEl = document.getElementById('video-description');
         const searchInputEl = document.getElementById('search-input');
         
         let currentActiveCard = null;
-        const YOUTUBE_VIDEO_ID = "h8DQSnERTB4";
+        // URL trực tiếp từ Google Drive
+        const GOOGLE_DRIVE_BASE_URL = "https://drive.google.com/uc?export=download&id=1BTMUKAFzwURhbTmXuTzVVtLrCBNYMUKO";
 
         function createMovieCard(data) {
             const card = document.createElement('div');
@@ -225,10 +224,11 @@
             card.classList.add('active');
             currentActiveCard = card;
 
-            const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
-            videoPlayerEl.src = `${baseSrc}?start=${data.time}&autoplay=1&mute=1`;
+            // Tua video theo thời gian (Hỗ trợ tua trực tiếp MP4)
+            videoPlayerEl.currentTime = data.time;
+            videoPlayerEl.play();
 
-            videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); 
+            videoTitleEl.textContent = data.title; 
             videoDescriptionEl.textContent = data.description;
         }
 
@@ -248,10 +248,11 @@
                 const firstCard = movieListEl.querySelector('.movie-card');
                 if (firstCard) {
                     const data = filteredData[0];
-                    const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
-                    videoPlayerEl.src = `${baseSrc}?autoplay=1&mute=1`; 
                     
-                    videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); 
+                    // Khởi tạo video bằng cách tải lại nguồn và tua về 0
+                    videoPlayerEl.load();
+                    
+                    videoTitleEl.textContent = data.title; 
                     videoDescriptionEl.textContent = data.description;
                     
                     firstCard.classList.add('active');
