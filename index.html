@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trình Duyệt Video Lịch Sử - 30/04/1975</title>
     <style>
-        /* CSS ĐÃ SỬA */
+        /* BẮT ĐẦU CSS: FIX LỖI BỐ CỤC VÀ KHÔNG HIỆN THẺ */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -140,12 +140,13 @@
                 max-height: 30vh;
             }
         }
+        /* KẾT THÚC CSS */
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🎬 Trình Duyệt Nội Dung Lịch Sử cho ba Thành coi</h1>
+        <h1>🎬 Trình Duyệt Nội Dung Lịch Sử con trai làm trên web cho ba Thành coi</h1>
         <input type="text" id="search-input" placeholder="Tìm kiếm...">
     </header>
 
@@ -180,7 +181,90 @@
         // Dữ liệu đã sửa (đảm bảo tính bằng giây tuyệt đối)
         const videoData = [
             { id: 1, title: "Hỗn loạn trên đường phố (00:00)", image: "oo.mp4#t=1", time: 0, description: "Những hình ảnh đầu tiên về sự hỗn loạn và lo lắng của người dân Sài Gòn trên các con phố." },
-            { id: 2, title: "Xe tăng quân sự trên phố (00:04)", image: "oo.mp4#t=4", time: 4, description: "Cảnh xe quân sự xuất hiện trên đường phố
+            { id: 2, title: "Xe tăng quân sự trên phố (00:04)", image: "oo.mp4#t=4", time: 4, description: "Cảnh xe quân sự xuất hiện trên đường phố Sài Gòn, báo hiệu sự thay đổi." },
+            { id: 3, title: "Tổng thống Ford và Kissinger (01:32)", image: "oo.mp4#t=132", time: 92, description: "Tổng thống Mỹ Gerald Ford và Ngoại trưởng Henry Kissinger họp bàn về chiến dịch di tản khỏi Sài Gòn." },
+            { id: 4, title: "Di tản bằng trực thăng (01:45)", image: "oo.mp4#t=145", time: 105, description: "Những chuyến trực thăng khẩn cấp đưa người Mỹ và đồng minh khỏi Sài Gòn, một trong những cảnh tượng biểu tượng của sự kiện." },
+            { id: 5, title: "Lính Mỹ hỗ trợ leo cổng (03:13)", image: "oo.mp4#t=193", time: 193, description: "Cảnh tượng người dân chen chúc, tuyệt vọng leo qua hàng rào Tòa Đại sứ Mỹ để lên trực thăng." },
+            { id: 6, title: "Quân giải phóng vào Dinh Độc Lập (04:03)", image: "oo.mp4#t=403", time: 243, description: "Xe tăng và quân giải phóng tiến vào thành phố, đánh dấu giờ phút lịch sử." },
+            { id: 7, title: "Lời tuyên bố của Dương Văn Minh (04:22)", image: "oo.mp4#t=422", time: 262, description: "Tổng thống chính quyền Sài Gòn, Dương Văn Minh, tuyên bố đầu hàng không điều kiện, giải thể chính phủ." },
+            { id: 8, title: "Thu vũ khí (04:36)", image: "oo.mp4#t=436", time: 276, description: "Hình ảnh tập hợp các loại vũ khí bị thu hồi sau khi quân lực Việt Nam Cộng hòa hạ vũ khí." },
+            { id: 9, title: "Xe tăng 843 tiến vào (06:48)", image: "oo.mp4#t=648", time: 408, description: "Xe tăng T-54B số hiệu 843 và T-59 số hiệu 390 tiến vào cổng Dinh Độc Lập trưa 30/4/1975." },
+            { id: 10, title: "Đón chào trên đường phố (11:07)", image: "oo.mp4#t=1107", time: 667, description: "Cảnh quân giải phóng gặp gỡ người dân Sài Gòn, hòa bình đã lập lại." }
+        ];
 
+        const movieListEl = document.getElementById('movie-list');
+        const videoPlayerEl = document.getElementById('video-player');
+        const videoTitleEl = document.getElementById('video-title');
+        const videoDescriptionEl = document.getElementById('video-description');
+        const searchInputEl = document.getElementById('search-input');
+        
+        let currentActiveCard = null;
+        const YOUTUBE_VIDEO_ID = "h8DQSnERTB4";
 
+        function createMovieCard(data) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.setAttribute('data-time', data.time);
 
+            card.innerHTML = `
+                <img src="${data.image}" alt="${data.title}">
+                <h4>${data.title}</h4>
+            `;
+
+            card.addEventListener('click', () => {
+                loadVideoContent(data, card);
+            });
+            
+            return card;
+        }
+
+        function loadVideoContent(data, card) {
+            if (currentActiveCard) {
+                currentActiveCard.classList.remove('active');
+            }
+            card.classList.add('active');
+            currentActiveCard = card;
+
+            const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
+            videoPlayerEl.src = `${baseSrc}?start=${data.time}&autoplay=1&mute=1`;
+
+            videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); 
+            videoDescriptionEl.textContent = data.description;
+        }
+
+        function displayMovies(filter = '') {
+            movieListEl.innerHTML = ''; 
+            
+            const filteredData = videoData.filter(item => 
+                item.title.toLowerCase().includes(filter.toLowerCase()) || 
+                item.description.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filteredData.forEach(data => {
+                movieListEl.appendChild(createMovieCard(data));
+            });
+            
+            if (filter === '' && filteredData.length > 0) {
+                const firstCard = movieListEl.querySelector('.movie-card');
+                if (firstCard) {
+                    const data = filteredData[0];
+                    const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
+                    videoPlayerEl.src = `${baseSrc}?autoplay=1&mute=1`; 
+                    
+                    videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); 
+                    videoDescriptionEl.textContent = data.description;
+                    
+                    firstCard.classList.add('active');
+                    currentActiveCard = firstCard;
+                }
+            }
+        }
+
+        searchInputEl.addEventListener('input', (e) => {
+            displayMovies(e.target.value);
+        });
+
+        displayMovies();
+    </script>
+</body>
+</html>
