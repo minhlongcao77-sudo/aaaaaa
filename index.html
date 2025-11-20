@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trình Duyệt Video Lịch Sử - 30/04/1975</title>
     <style>
-        /* CSS ĐÃ SỬA */
+        /* CSS ĐÃ SỬA HOÀN CHỈNH */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -70,7 +70,6 @@
             border-radius: 8px;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            /* Tăng kích thước font để bù đắp cho việc thiếu hình ảnh */
             min-height: 80px; 
         }
 
@@ -82,8 +81,6 @@
         .movie-card.active {
             border: 2px solid #ff4500;
         }
-
-        /* Đã xóa CSS cho .movie-card img vì không dùng nữa */
         
         .movie-card h4 {
             font-size: 14px;
@@ -151,7 +148,7 @@
         <section id="player-section">
             <video 
                 id="video-player" 
-                src="https://drive.google.com/uc?id=1BTMUKAFzwURhbTmXuTzVVtLrCBNYMUKO" 
+                src="https://www.dropbox.com/scl/fi/4j2xdkbld1ywke3eh3gbp/oo.mp4?rlkey=gho3efbbrmsmq0xhd7teyaz3u&st=h4lkg60m&dl=1" 
                 controls autoplay muted 
                 style="width: 100%; max-height: 500px; border-radius: 10px; background-color: #000;">
                 Trình duyệt của bạn không hỗ trợ video HTML5.
@@ -163,14 +160,13 @@
                     Video lịch sử này mô tả những ngày cuối cùng của chế độ Sài Gòn và sự kiện ngày 30 tháng 4 năm 1975. Vui lòng chọn một khoảnh khắc bên trái để xem chi tiết.
                 </p>
                 <p>
-                    <small>Lưu ý: Sử dụng Google Drive để tải trực tiếp video, khắc phục giới hạn độ tuổi.</small>
+                    <small>Lưu ý: Đã chuyển sang Dropbox để khắc phục lỗi không tải video (lỗi 0:00).</small>
                 </p>
             </div>
         </section>
     </main>
 
     <script>
-        // DỮ LIỆU ĐÃ XÓA THAM CHIẾU HÌNH ẢNH ĐỂ KHẮC PHỤC LỖI 404/CONSOLE
         const videoData = [
             { id: 1, title: "Báo cáo tình hình", time: 0, description: "Chỉ huy quân giải phóng báo cáo với Nội các Sài Gòn về tình hình tiến công." },
             { id: 2, title: "Xe tăng vào trung tâm", time: 17, description: "Xe tăng T54/59 tiến vào thành phố, người dân chào đón." },
@@ -186,20 +182,19 @@
 
         const movieListEl = document.getElementById('movie-list');
         const videoPlayerEl = document.getElementById('video-player');
-        // Đã bỏ videoSourceEl vì thẻ source bị loại bỏ trong HTML
         const videoTitleEl = document.getElementById('video-title');
         const videoDescriptionEl = document.getElementById('video-description');
         const searchInputEl = document.getElementById('search-input');
         
         let currentActiveCard = null;
-        const GOOGLE_DRIVE_BASE_URL = "https://drive.google.com/uc?id=1BTMUKAFzwURhbTmXuTzVVtLrCBNYMUKO";
+        // Đã cập nhật URL Dropbox mới
+        const VIDEO_BASE_URL = "https://www.dropbox.com/scl/fi/4j2xdkbld1ywke3eh3gbp/oo.mp4?rlkey=gho3efbbrmsmq0xhd7teyaz3u&st=h4lkg60m&dl=1";
 
         function createMovieCard(data) {
             const card = document.createElement('div');
             card.className = 'movie-card';
             card.setAttribute('data-time', data.time);
-
-            // ĐÃ XÓA THẺ HÌNH ẢNH (<img>)
+            
             card.innerHTML = `
                 <h4>${data.title}</h4>
             `;
@@ -243,7 +238,7 @@
                 if (firstCard) {
                     const data = filteredData[0];
                     
-                    // Khởi tạo video bằng cách tải và phát ngay lập tức (FIXED)
+                    // Khởi tạo video bằng cách tải và phát ngay lập tức
                     videoPlayerEl.load();
                     videoPlayerEl.play(); 
                     
