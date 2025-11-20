@@ -197,7 +197,6 @@
         const searchInputEl = document.getElementById('search-input');
         
         let currentActiveCard = null;
-        // URL trực tiếp từ Google Drive
         const GOOGLE_DRIVE_BASE_URL = "https://drive.google.com/uc?export=download&id=1BTMUKAFzwURhbTmXuTzVVtLrCBNYMUKO";
 
         function createMovieCard(data) {
@@ -219,53 +218,4 @@
 
         function loadVideoContent(data, card) {
             if (currentActiveCard) {
-                currentActiveCard.classList.remove('active');
-            }
-            card.classList.add('active');
-            currentActiveCard = card;
-
-            // Tua video theo thời gian (Hỗ trợ tua trực tiếp MP4)
-            videoPlayerEl.currentTime = data.time;
-            videoPlayerEl.play();
-
-            videoTitleEl.textContent = data.title; 
-            videoDescriptionEl.textContent = data.description;
-        }
-
-        function displayMovies(filter = '') {
-            movieListEl.innerHTML = ''; 
-            
-            const filteredData = videoData.filter(item => 
-                item.title.toLowerCase().includes(filter.toLowerCase()) || 
-                item.description.toLowerCase().includes(filter.toLowerCase())
-            );
-
-            filteredData.forEach(data => {
-                movieListEl.appendChild(createMovieCard(data));
-            });
-            
-            if (filter === '' && filteredData.length > 0) {
-                const firstCard = movieListEl.querySelector('.movie-card');
-                if (firstCard) {
-                    const data = filteredData[0];
-                    
-                    // Khởi tạo video bằng cách tải lại nguồn và tua về 0
-                    videoPlayerEl.load();
-                    
-                    videoTitleEl.textContent = data.title; 
-                    videoDescriptionEl.textContent = data.description;
-                    
-                    firstCard.classList.add('active');
-                    currentActiveCard = firstCard;
-                }
-            }
-        }
-
-        searchInputEl.addEventListener('input', (e) => {
-            displayMovies(e.target.value);
-        });
-
-        displayMovies();
-    </script>
-</body>
-</html>
+                currentActive
