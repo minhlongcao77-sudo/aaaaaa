@@ -1,100 +1,101 @@
-<script>
-    // Dữ liệu giả lập cho các "Thẻ phim" (Khoảnh khắc lịch sử)
-    const videoData = [
-        {
-            id: 1,
-            title: "Hỗn loạn trên đường phố (00:00)",
-            image: "oo.mp4#t=1",
-            time: 0, // Sửa thời gian bắt đầu từ 0
-            description: "Những hình ảnh đầu tiên về sự hỗn loạn và lo lắng của người dân Sài Gòn trên các con phố."
-        },
-        // ... (Giữ nguyên các mục còn lại của videoData)
-        { id: 2, title: "Xe tăng quân sự trên phố (00:04)", image: "oo.mp4#t=4", time: 4, description: "Cảnh xe quân sự xuất hiện trên đường phố Sài Gòn, báo hiệu sự thay đổi." },
-        { id: 3, title: "Tổng thống Ford và Kissinger (01:32)", image: "oo.mp4#t=132", time: 92, description: "Tổng thống Mỹ Gerald Ford và Ngoại trưởng Henry Kissinger họp bàn về chiến dịch di tản khỏi Sài Gòn." },
-        { id: 4, title: "Di tản bằng trực thăng (01:45)", image: "oo.mp4#t=145", time: 105, description: "Những chuyến trực thăng khẩn cấp đưa người Mỹ và đồng minh khỏi Sài Gòn, một trong những cảnh tượng biểu tượng của sự kiện." },
-        { id: 5, title: "Lính Mỹ hỗ trợ leo cổng (03:13)", image: "oo.mp4#t=193", time: 193, description: "Cảnh tượng người dân chen chúc, tuyệt vọng leo qua hàng rào Tòa Đại sứ Mỹ để lên trực thăng." },
-        { id: 6, title: "Quân giải phóng vào Dinh Độc Lập (04:03)", image: "oo.mp4#t=403", time: 243, description: "Xe tăng và quân giải phóng tiến vào thành phố, đánh dấu giờ phút lịch sử." },
-        { id: 7, title: "Lời tuyên bố của Dương Văn Minh (04:22)", image: "oo.mp4#t=422", time: 262, description: "Tổng thống chính quyền Sài Gòn, Dương Văn Minh, tuyên bố đầu hàng không điều kiện, giải thể chính phủ." },
-        { id: 8, title: "Thu vũ khí (04:36)", image: "oo.mp4#t=436", time: 276, description: "Hình ảnh tập hợp các loại vũ khí bị thu hồi sau khi quân lực Việt Nam Cộng hòa hạ vũ khí." },
-        { id: 9, title: "Xe tăng 843 tiến vào (06:48)", image: "oo.mp4#t=648", time: 408, description: "Xe tăng T-54B số hiệu 843 và T-59 số hiệu 390 tiến vào cổng Dinh Độc Lập trưa 30/4/1975." },
-        { id: 10, title: "Đón chào trên đường phố (11:07)", image: "oo.mp4#t=1107", time: 667, description: "Cảnh quân giải phóng gặp gỡ người dân Sài Gòn, hòa bình đã lập lại." }
-    ];
+const videoData = [
+    { id: 1, title: "Hỗn loạn trên đường phố (00:00)", image: "oo.mp4#t=1", time: 0, description: "Những hình ảnh đầu tiên về sự hỗn loạn và lo lắng của người dân Sài Gòn trên các con phố." },
+    { id: 2, title: "Xe tăng quân sự trên phố (00:04)", image: "oo.mp4#t=4", time: 4, description: "Cảnh xe quân sự xuất hiện trên đường phố Sài Gòn, báo hiệu sự thay đổi." },
+    { id: 3, title: "Tổng thống Ford và Kissinger (01:32)", image: "oo.mp4#t=132", time: 92, description: "Tổng thống Mỹ Gerald Ford và Ngoại trưởng Henry Kissinger họp bàn về chiến dịch di tản khỏi Sài Gòn." },
+    { id: 4, title: "Di tản bằng trực thăng (01:45)", image: "oo.mp4#t=145", time: 105, description: "Những chuyến trực thăng khẩn cấp đưa người Mỹ và đồng minh khỏi Sài Gòn, một trong những cảnh tượng biểu tượng của sự kiện." },
+    { id: 5, title: "Lính Mỹ hỗ trợ leo cổng (03:13)", image: "oo.mp4#t=193", time: 193, description: "Cảnh tượng người dân chen chúc, tuyệt vọng leo qua hàng rào Tòa Đại sứ Mỹ để lên trực thăng." },
+    { id: 6, title: "Quân giải phóng vào Dinh Độc Lập (04:03)", image: "oo.mp4#t=403", time: 243, description: "Xe tăng và quân giải phóng tiến vào thành phố, đánh dấu giờ phút lịch sử." },
+    { id: 7, title: "Lời tuyên bố của Dương Văn Minh (04:22)", image: "oo.mp4#t=422", time: 262, description: "Tổng thống chính quyền Sài Gòn, Dương Văn Minh, tuyên bố đầu hàng không điều kiện, giải thể chính phủ." },
+    { id: 8, title: "Thu vũ khí (04:36)", image: "oo.mp4#t=436", time: 276, description: "Hình ảnh tập hợp các loại vũ khí bị thu hồi sau khi quân lực Việt Nam Cộng hòa hạ vũ khí." },
+    { id: 9, title: "Xe tăng 843 tiến vào (06:48)", image: "oo.mp4#t=648", time: 408, description: "Xe tăng T-54B số hiệu 843 và T-59 số hiệu 390 tiến vào cổng Dinh Độc Lập trưa 30/4/1975." },
+    { id: 10, title: "Đón chào trên đường phố (11:07)", image: "oo.mp4#t=1107", time: 667, description: "Cảnh quân giải phóng gặp gỡ người dân Sài Gòn, hòa bình đã lập lại." }
+];
 
-    const movieListEl = document.getElementById('movie-list');
-    const videoPlayerEl = document.getElementById('video-player');
-    const videoTitleEl = document.getElementById('video-title');
-    const videoDescriptionEl = document.getElementById('video-description');
-    const searchInputEl = document.getElementById('search-input');
-    
-    let currentActiveCard = null;
-    // Đặt ID YouTube Video tại đây
-    const YOUTUBE_VIDEO_ID = "ID_YOUTUBE_CỦA_BẠN"; // THAY THẾ BẰNG ID THỰC TẾ
+const movieListEl = document.getElementById('movie-list');
+const videoPlayerEl = document.getElementById('video-player');
+const videoTitleEl = document.getElementById('video-title');
+const videoDescriptionEl = document.getElementById('video-description');
+const searchInputEl = document.getElementById('search-input');
 
-    // 1. Hàm tạo thẻ phim (movie card) - (Giữ nguyên)
-    function createMovieCard(data) {
-        const card = document.createElement('div');
-        card.className = 'movie-card';
-        card.setAttribute('data-time', data.time);
+let currentActiveCard = null;
+const YOUTUBE_VIDEO_ID = "N0EQjG8TRtA";
 
-        card.innerHTML = `
-            <img src="${data.image}" alt="${data.title}">
-            <h4>${data.title}</h4>
-        `;
+// 1. Hàm tạo thẻ phim (movie card)
+function createMovieCard(data) {
+    const card = document.createElement('div');
+    card.className = 'movie-card';
+    card.setAttribute('data-time', data.time);
 
-        card.addEventListener('click', () => {
-            loadVideoContent(data, card);
-        });
-        
-        return card;
-    }
-    
-    // 2. Hàm tải nội dung video và cập nhật giao diện (ĐÃ SỬA CHO IFRAME YOUTUBE)
-    function loadVideoContent(data, card) {
-        // Cập nhật thẻ đang hoạt động (active card)
-        if (currentActiveCard) {
-            currentActiveCard.classList.remove('active');
-        }
-        card.classList.add('active');
-        currentActiveCard = card;
+    card.innerHTML = `
+        <img src="${data.image}" alt="${data.title}">
+        <h4>${data.title}</h4>
+    `;
 
-        // Thay đổi thuộc tính SRC của IFRAME để tua video đến thời điểm (start=)
-        const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
-        videoPlayerEl.src = `${baseSrc}?start=${data.time}&autoplay=1&mute=1`;
-
-        // Cập nhật thông tin chi tiết
-        videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); // Xóa phần thời gian khỏi tiêu đề
-        videoDescriptionEl.textContent = data.description;
-    }
-
-    // 3. Hàm hiển thị danh sách (có thể lọc) - (Giữ nguyên)
-    function displayMovies(filter = '') {
-        movieListEl.innerHTML = ''; 
-        
-        const filteredData = videoData.filter(item => 
-            item.title.toLowerCase().includes(filter.toLowerCase()) || 
-            item.description.toLowerCase().includes(filter.toLowerCase())
-        );
-
-        filteredData.forEach(data => {
-            movieListEl.appendChild(createMovieCard(data));
-        });
-        
-        // Tải nội dung của thẻ đầu tiên khi khởi tạo 
-        if (filter === '' && filteredData.length > 0) {
-            const firstCard = movieListEl.querySelector('.movie-card');
-            if (firstCard) {
-                loadVideoContent(filteredData[0], firstCard);
-            }
-        }
-    }
-    
-    // 4. Xử lý tìm kiếm - (Giữ nguyên)
-    searchInputEl.addEventListener('input', (e) => {
-        displayMovies(e.target.value);
+    card.addEventListener('click', () => {
+        loadVideoContent(data, card);
     });
+    
+    return card;
+}
 
-    // Khởi tạo trang
-    displayMovies();
-</script>
+// 2. Hàm tải nội dung video và cập nhật giao diện (ĐÃ SỬA cho YouTube)
+function loadVideoContent(data, card) {
+    // Cập nhật thẻ đang hoạt động (active card)
+    if (currentActiveCard) {
+        currentActiveCard.classList.remove('active');
+    }
+    card.classList.add('active');
+    currentActiveCard = card;
+
+    // Thay đổi thuộc tính SRC của IFRAME để tua video đến thời điểm (start=)
+    const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
+    // Thiết lập src với tham số start để tua và autoplay
+    videoPlayerEl.src = `${baseSrc}?start=${data.time}&autoplay=1&mute=1`;
+
+    // Cập nhật thông tin chi tiết
+    videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); 
+    videoDescriptionEl.textContent = data.description;
+}
+
+// 3. Hàm hiển thị danh sách (có thể lọc)
+function displayMovies(filter = '') {
+    movieListEl.innerHTML = ''; 
+    
+    const filteredData = videoData.filter(item => 
+        item.title.toLowerCase().includes(filter.toLowerCase()) || 
+        item.description.toLowerCase().includes(filter.toLowerCase())
+    );
+
+    filteredData.forEach(data => {
+        movieListEl.appendChild(createMovieCard(data));
+    });
+    
+    // Tải nội dung của thẻ đầu tiên khi khởi tạo (Fix lỗi khởi tạo)
+    if (filter === '' && filteredData.length > 0) {
+        const firstCard = movieListEl.querySelector('.movie-card');
+        if (firstCard) {
+            // Sửa: Lần đầu tải, set src mặc định mà không cần tua
+            const data = filteredData[0];
+            const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
+            videoPlayerEl.src = `${baseSrc}?autoplay=1&mute=1`; 
+            
+            // Cập nhật chi tiết lần đầu
+            videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); 
+            videoDescriptionEl.textContent = data.description;
+            
+            firstCard.classList.add('active');
+            currentActiveCard = firstCard;
+        }
+    }
+}
+
+// 4. Xử lý tìm kiếm
+searchInputEl.addEventListener('input', (e) => {
+    displayMovies(e.target.value);
+});
+
+// Khởi tạo trang
+displayMovies();
+
 
 
