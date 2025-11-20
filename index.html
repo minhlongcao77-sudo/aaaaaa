@@ -70,6 +70,8 @@
             border-radius: 8px;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
+            /* Tăng kích thước font để bù đắp cho việc thiếu hình ảnh */
+            min-height: 80px; 
         }
 
         .movie-card:hover {
@@ -81,20 +83,13 @@
             border: 2px solid #ff4500;
         }
 
-        .movie-card img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 5px;
-        }
+        /* Đã xóa CSS cho .movie-card img vì không dùng nữa */
         
         .movie-card h4 {
             font-size: 14px;
             margin: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: wrap;
+            overflow: visible;
         }
 
         #player-section {
@@ -163,3 +158,59 @@
             </video>
             
             <div id="player-details">
+                <h2 id="video-title">Khoảnh khắc 30/04/1975 - Sài Gòn</h2>
+                <p id="video-description">
+                    Video lịch sử này mô tả những ngày cuối cùng của chế độ Sài Gòn và sự kiện ngày 30 tháng 4 năm 1975. Vui lòng chọn một khoảnh khắc bên trái để xem chi tiết.
+                </p>
+                <p>
+                    <small>Lưu ý: Sử dụng Google Drive để tải trực tiếp video, khắc phục giới hạn độ tuổi.</small>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // DỮ LIỆU ĐÃ XÓA THAM CHIẾU HÌNH ẢNH ĐỂ KHẮC PHỤC LỖI 404/CONSOLE
+        const videoData = [
+            { id: 1, title: "Báo cáo tình hình", time: 0, description: "Chỉ huy quân giải phóng báo cáo với Nội các Sài Gòn về tình hình tiến công." },
+            { id: 2, title: "Xe tăng vào trung tâm", time: 17, description: "Xe tăng T54/59 tiến vào thành phố, người dân chào đón." },
+            { id: 3, title: "Tăng 390 húc cổng Dinh", time: 26, description: "Xe tăng húc đổ cổng Dinh Độc Lập." },
+            { id: 4, title: "Tìm đường lên nóc", time: 40, description: "Bộ đội tiến vào Dinh, tìm đường lên nóc để cắm cờ giải phóng." },
+            { id: 5, title: "Bộ đội vào phòng họp", time: 59, description: "Quân giải phóng tiến vào phòng họp nơi nội các đang chờ." },
+            { id: 6, title: "Dương Văn Minh tuyên bố", time: 75, description: "Đại tướng Dương Văn Minh đứng lên tuyên bố đầu hàng quân giải phóng." },
+            { id: 7, title: "Chỉ huy tuyên bố bắt giữ", time: 85, description: "Chỉ huy quân giải phóng tuyên bố nội các là tù binh." },
+            { id: 8, title: "Nội các rời Dinh", time: 107, description: "Dương Văn Minh và nội các bước xuống cầu thang rời Dinh." },
+            { id: 9, title: "Đọc tuyên bố đầu hàng", time: 143, description: "Tướng Dương Văn Minh ngồi đọc tuyên bố đầu hàng không điều kiện (phân cảnh dựng lại)." },
+            { id: 10, title: "Phút giây chiến thắng", time: 154, description: "Quân giải phóng vỡ òa niềm vui chiến thắng." }
+        ];
+
+        const movieListEl = document.getElementById('movie-list');
+        const videoPlayerEl = document.getElementById('video-player');
+        const videoSourceEl = document.getElementById('video-source'); 
+        const videoTitleEl = document.getElementById('video-title');
+        const videoDescriptionEl = document.getElementById('video-description');
+        const searchInputEl = document.getElementById('search-input');
+        
+        let currentActiveCard = null;
+        const GOOGLE_DRIVE_BASE_URL = "https://drive.google.com/uc?id=1BTMUKAFzwURhbTmXuTzVVtLrCBNYMUKO";
+
+        function createMovieCard(data) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.setAttribute('data-time', data.time);
+
+            // ĐÃ XÓA THẺ HÌNH ẢNH (<img>)
+            card.innerHTML = `
+                <h4>${data.title}</h4>
+            `;
+
+            card.addEventListener('click', () => {
+                loadVideoContent(data, card);
+            });
+            
+            return card;
+        }
+
+        function loadVideoContent(data, card) {
+            if (currentActiveCard) {
+                currentActiveCard
