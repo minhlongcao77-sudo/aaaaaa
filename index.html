@@ -1,101 +1,269 @@
-const videoData = [
-    { id: 1, title: "Hỗn loạn trên đường phố (00:00)", image: "oo.mp4#t=1", time: 0, description: "Những hình ảnh đầu tiên về sự hỗn loạn và lo lắng của người dân Sài Gòn trên các con phố." },
-    { id: 2, title: "Xe tăng quân sự trên phố (00:04)", image: "oo.mp4#t=4", time: 4, description: "Cảnh xe quân sự xuất hiện trên đường phố Sài Gòn, báo hiệu sự thay đổi." },
-    { id: 3, title: "Tổng thống Ford và Kissinger (01:32)", image: "oo.mp4#t=132", time: 92, description: "Tổng thống Mỹ Gerald Ford và Ngoại trưởng Henry Kissinger họp bàn về chiến dịch di tản khỏi Sài Gòn." },
-    { id: 4, title: "Di tản bằng trực thăng (01:45)", image: "oo.mp4#t=145", time: 105, description: "Những chuyến trực thăng khẩn cấp đưa người Mỹ và đồng minh khỏi Sài Gòn, một trong những cảnh tượng biểu tượng của sự kiện." },
-    { id: 5, title: "Lính Mỹ hỗ trợ leo cổng (03:13)", image: "oo.mp4#t=193", time: 193, description: "Cảnh tượng người dân chen chúc, tuyệt vọng leo qua hàng rào Tòa Đại sứ Mỹ để lên trực thăng." },
-    { id: 6, title: "Quân giải phóng vào Dinh Độc Lập (04:03)", image: "oo.mp4#t=403", time: 243, description: "Xe tăng và quân giải phóng tiến vào thành phố, đánh dấu giờ phút lịch sử." },
-    { id: 7, title: "Lời tuyên bố của Dương Văn Minh (04:22)", image: "oo.mp4#t=422", time: 262, description: "Tổng thống chính quyền Sài Gòn, Dương Văn Minh, tuyên bố đầu hàng không điều kiện, giải thể chính phủ." },
-    { id: 8, title: "Thu vũ khí (04:36)", image: "oo.mp4#t=436", time: 276, description: "Hình ảnh tập hợp các loại vũ khí bị thu hồi sau khi quân lực Việt Nam Cộng hòa hạ vũ khí." },
-    { id: 9, title: "Xe tăng 843 tiến vào (06:48)", image: "oo.mp4#t=648", time: 408, description: "Xe tăng T-54B số hiệu 843 và T-59 số hiệu 390 tiến vào cổng Dinh Độc Lập trưa 30/4/1975." },
-    { id: 10, title: "Đón chào trên đường phố (11:07)", image: "oo.mp4#t=1107", time: 667, description: "Cảnh quân giải phóng gặp gỡ người dân Sài Gòn, hòa bình đã lập lại." }
-];
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình Duyệt Video Lịch Sử - 30/04/1975</title>
+    <style>
+        /* CSS ĐÃ SỬA */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #111;
+            color: #fff;
+        }
 
-const movieListEl = document.getElementById('movie-list');
-const videoPlayerEl = document.getElementById('video-player');
-const videoTitleEl = document.getElementById('video-title');
-const videoDescriptionEl = document.getElementById('video-description');
-const searchInputEl = document.getElementById('search-input');
+        header {
+            padding: 20px;
+            background-color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-let currentActiveCard = null;
-const YOUTUBE_VIDEO_ID = "N0EQjG8TRtA";
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #e0e0e0;
+        }
 
-// 1. Hàm tạo thẻ phim (movie card)
-function createMovieCard(data) {
-    const card = document.createElement('div');
-    card.className = 'movie-card';
-    card.setAttribute('data-time', data.time);
+        header input {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            width: 250px;
+        }
 
-    card.innerHTML = `
-        <img src="${data.image}" alt="${data.title}">
-        <h4>${data.title}</h4>
-    `;
+        main {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            min-height: 90vh;
+        }
 
-    card.addEventListener('click', () => {
-        loadVideoContent(data, card);
-    });
-    
-    return card;
-}
+        #movie-list {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        #movie-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        #movie-list::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 10px;
+        }
+        #movie-list::-webkit-scrollbar-track {
+            background: #222;
+        }
 
-// 2. Hàm tải nội dung video và cập nhật giao diện (ĐÃ SỬA cho YouTube)
-function loadVideoContent(data, card) {
-    // Cập nhật thẻ đang hoạt động (active card)
-    if (currentActiveCard) {
-        currentActiveCard.classList.remove('active');
-    }
-    card.classList.add('active');
-    currentActiveCard = card;
+        .movie-card {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-    // Thay đổi thuộc tính SRC của IFRAME để tua video đến thời điểm (start=)
-    const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
-    // Thiết lập src với tham số start để tua và autoplay
-    videoPlayerEl.src = `${baseSrc}?start=${data.time}&autoplay=1&mute=1`;
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .movie-card.active {
+            border: 2px solid #ff4500;
+        }
 
-    // Cập nhật thông tin chi tiết
-    videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); 
-    videoDescriptionEl.textContent = data.description;
-}
+        .movie-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .movie-card h4 {
+            font-size: 14px;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-// 3. Hàm hiển thị danh sách (có thể lọc)
-function displayMovies(filter = '') {
-    movieListEl.innerHTML = ''; 
-    
-    const filteredData = videoData.filter(item => 
-        item.title.toLowerCase().includes(filter.toLowerCase()) || 
-        item.description.toLowerCase().includes(filter.toLowerCase())
-    );
+        #player-section {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-    filteredData.forEach(data => {
-        movieListEl.appendChild(createMovieCard(data));
-    });
-    
-    // Tải nội dung của thẻ đầu tiên khi khởi tạo (Fix lỗi khởi tạo)
-    if (filter === '' && filteredData.length > 0) {
-        const firstCard = movieListEl.querySelector('.movie-card');
-        if (firstCard) {
-            // Sửa: Lần đầu tải, set src mặc định mà không cần tua
-            const data = filteredData[0];
-            const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
-            videoPlayerEl.src = `${baseSrc}?autoplay=1&mute=1`; 
+        #video-player {
+            width: 100%;
+            max-height: 500px;
+            border-radius: 10px;
+            background-color: #000;
+        }
+
+        #player-details {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        #player-details h2 {
+            margin-top: 0;
+            color: #ff4500;
+        }
+        
+        #player-details p {
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+            }
+
+            #player-section {
+                flex: none;
+            }
+
+            #movie-list {
+                flex: none;
+                max-height: 30vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎬 Trình Duyệt Nội Dung Lịch Sử cho ba Thành coi</h1>
+        <input type="text" id="search-input" placeholder="Tìm kiếm...">
+    </header>
+
+    <main>
+        <section id="movie-list">
+            </section>
+
+        <section id="player-section">
+            <iframe 
+                id="video-player" 
+                width="100%" 
+                height="500" 
+                src="https://www.youtube.com/embed/N0EQjG8TRtA?autoplay=1&mute=1" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>
+
+            <div id="player-details">
+                <h2 id="video-title">Khoảnh khắc 30/04/1975 - Sài Gòn</h2>
+                <p id="video-description">
+                    Video lịch sử này mô tả những ngày cuối cùng của chế độ Sài Gòn và sự kiện ngày 30 tháng 4 năm 1975. Vui lòng chọn một khoảnh khắc bên trái để xem chi tiết.
+                </p>
+                <p>
+                    <small>Lưu ý: Chất lượng video và âm thanh là nguyên bản từ các tài liệu lịch sử.</small>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Dữ liệu đã sửa (đảm bảo tính bằng giây tuyệt đối)
+        const videoData = [
+            { id: 1, title: "Hỗn loạn trên đường phố (00:00)", image: "oo.mp4#t=1", time: 0, description: "Những hình ảnh đầu tiên về sự hỗn loạn và lo lắng của người dân Sài Gòn trên các con phố." },
+            { id: 2, title: "Xe tăng quân sự trên phố (00:04)", image: "oo.mp4#t=4", time: 4, description: "Cảnh xe quân sự xuất hiện trên đường phố Sài Gòn, báo hiệu sự thay đổi." },
+            { id: 3, title: "Tổng thống Ford và Kissinger (01:32)", image: "oo.mp4#t=132", time: 92, description: "Tổng thống Mỹ Gerald Ford và Ngoại trưởng Henry Kissinger họp bàn về chiến dịch di tản khỏi Sài Gòn." },
+            { id: 4, title: "Di tản bằng trực thăng (01:45)", image: "oo.mp4#t=145", time: 105, description: "Những chuyến trực thăng khẩn cấp đưa người Mỹ và đồng minh khỏi Sài Gòn, một trong những cảnh tượng biểu tượng của sự kiện." },
+            { id: 5, title: "Lính Mỹ hỗ trợ leo cổng (03:13)", image: "oo.mp4#t=193", time: 193, description: "Cảnh tượng người dân chen chúc, tuyệt vọng leo qua hàng rào Tòa Đại sứ Mỹ để lên trực thăng." },
+            { id: 6, title: "Quân giải phóng vào Dinh Độc Lập (04:03)", image: "oo.mp4#t=403", time: 243, description: "Xe tăng và quân giải phóng tiến vào thành phố, đánh dấu giờ phút lịch sử." },
+            { id: 7, title: "Lời tuyên bố của Dương Văn Minh (04:22)", image: "oo.mp4#t=422", time: 262, description: "Tổng thống chính quyền Sài Gòn, Dương Văn Minh, tuyên bố đầu hàng không điều kiện, giải thể chính phủ." },
+            { id: 8, title: "Thu vũ khí (04:36)", image: "oo.mp4#t=436", time: 276, description: "Hình ảnh tập hợp các loại vũ khí bị thu hồi sau khi quân lực Việt Nam Cộng hòa hạ vũ khí." },
+            { id: 9, title: "Xe tăng 843 tiến vào (06:48)", image: "oo.mp4#t=648", time: 408, description: "Xe tăng T-54B số hiệu 843 và T-59 số hiệu 390 tiến vào cổng Dinh Độc Lập trưa 30/4/1975." },
+            { id: 10, title: "Đón chào trên đường phố (11:07)", image: "oo.mp4#t=1107", time: 667, description: "Cảnh quân giải phóng gặp gỡ người dân Sài Gòn, hòa bình đã lập lại." }
+        ];
+
+        const movieListEl = document.getElementById('movie-list');
+        const videoPlayerEl = document.getElementById('video-player');
+        const videoTitleEl = document.getElementById('video-title');
+        const videoDescriptionEl = document.getElementById('video-description');
+        const searchInputEl = document.getElementById('search-input');
+        
+        let currentActiveCard = null;
+        const YOUTUBE_VIDEO_ID = "N0EQjG8TRtA";
+
+        function createMovieCard(data) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.setAttribute('data-time', data.time);
+
+            card.innerHTML = `
+                <img src="${data.image}" alt="${data.title}">
+                <h4>${data.title}</h4>
+            `;
+
+            card.addEventListener('click', () => {
+                loadVideoContent(data, card);
+            });
             
-            // Cập nhật chi tiết lần đầu
+            return card;
+        }
+
+        function loadVideoContent(data, card) {
+            if (currentActiveCard) {
+                currentActiveCard.classList.remove('active');
+            }
+            card.classList.add('active');
+            currentActiveCard = card;
+
+            const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
+            videoPlayerEl.src = `${baseSrc}?start=${data.time}&autoplay=1&mute=1`;
+
             videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); 
             videoDescriptionEl.textContent = data.description;
-            
-            firstCard.classList.add('active');
-            currentActiveCard = firstCard;
         }
-    }
-}
 
-// 4. Xử lý tìm kiếm
-searchInputEl.addEventListener('input', (e) => {
-    displayMovies(e.target.value);
-});
+        function displayMovies(filter = '') {
+            movieListEl.innerHTML = ''; 
+            
+            const filteredData = videoData.filter(item => 
+                item.title.toLowerCase().includes(filter.toLowerCase()) || 
+                item.description.toLowerCase().includes(filter.toLowerCase())
+            );
 
-// Khởi tạo trang
-displayMovies();
+            filteredData.forEach(data => {
+                movieListEl.appendChild(createMovieCard(data));
+            });
+            
+            if (filter === '' && filteredData.length > 0) {
+                const firstCard = movieListEl.querySelector('.movie-card');
+                if (firstCard) {
+                    const data = filteredData[0];
+                    const baseSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
+                    videoPlayerEl.src = `${baseSrc}?autoplay=1&mute=1`; 
+                    
+                    videoTitleEl.textContent = data.title.replace(/ \([\w:]+\)/, ''); 
+                    videoDescriptionEl.textContent = data.description;
+                    
+                    firstCard.classList.add('active');
+                    currentActiveCard = firstCard;
+                }
+            }
+        }
 
+        searchInputEl.addEventListener('input', (e) => {
+            displayMovies(e.target.value);
+        });
 
-
+        displayMovies();
+    </script>
+</body>
+</html>
